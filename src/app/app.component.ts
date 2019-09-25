@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AppState } from './reducers';
+import { isLoggedIn, isLoggedOut } from './auth/auth.selector';
 
 @Component({
   selector: 'app-root',
@@ -44,13 +45,19 @@ export class AppComponent implements OnInit {
 
     //this.store.subscribe(state => console.log("store value: ", state));
 
-    this.isLoggedIn$ = this.store.pipe(
-      map(state => !!state["auth"].user) // !! validation to true when is there is a user
+   /* this.isLoggedIn$ = this.store.pipe(
+      select(state => !!state["auth"].user) // !! validation to true when is there is a user
     );
     this.isLoggedOut$ = this.store.pipe(
-      map(state => !state["auth"].user)
-    );
+      select(state => !state["auth"].user)
+    );*/
 
+ this.isLoggedIn$ = this.store.pipe(
+      select(isLoggedIn) // !! validation to true when is there is a user
+    );
+    this.isLoggedOut$ = this.store.pipe(
+      select(isLoggedOut)
+    );
   }
 
   logout() {
